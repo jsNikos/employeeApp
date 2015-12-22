@@ -5,11 +5,21 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var httpProxy = require('http-proxy');
+var mongoose = require('mongoose');
+var api = require('./routes/api');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+mongoose.Promise = require('q').Promise;
+mongoose.connect('mongodb://localhost/test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function(callback) {
+  console.log('connected to db');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,10 +45,12 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(cookieParser());
+app.use('/stylesheets', require('less-middleware')(
+  path.join(__dirname, 'public', 'stylesheets'), {}
+));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -53,6 +65,7 @@ app.use(function(req, res, next) {
 // will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log(err);
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
