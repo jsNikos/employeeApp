@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var httpProxy = require('http-proxy');
 var mongoose = require('mongoose');
-var api = require('./routes/api');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -50,7 +49,8 @@ app.use('/stylesheets', require('less-middleware')(
 ));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', api);
+app.use('/schedule/api', require('./routes/scheduleAPI'));
+app.use('/roles/api', require('./routes/rolesAPI'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

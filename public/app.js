@@ -3,26 +3,36 @@ var employeeApp = angular.module('employeeApp', [
     'scheduleModule',
     'messagesModule',
     'timeoffModule',
-    'availabilityModule'
+    'availabilityModule',
+    'rolesModule',
+    'employeesModule'
   ])
   .config(['$routeProvider',
     function($routeProvider) {
       $routeProvider.
       when('/schedule', {
-        templateUrl: 'schedule.html',
+        templateUrl: 'schedule/schedule.html',
         controller: 'ScheduleController'
       }).
       when('/messages', {
-        templateUrl: 'messages.html',
+        templateUrl: 'messages/messages.html',
         controller: 'MessagesController'
       }).
       when('/availability', {
-        templateUrl: 'availability.html',
+        templateUrl: 'availability/availability.html',
         controller: 'AvailabilityController'
       }).
       when('/timeoff', {
-        templateUrl: 'timeoff.html',
+        templateUrl: 'timeoff/timeoff.html',
         controller: 'TimeoffController'
+      }).
+      when('/roles', {
+        templateUrl: 'roles/roles.html',
+        controller: 'RolesController'
+      }).
+      when('/employees', {
+        templateUrl: 'employees/employees.html',
+        controller: 'EmployeesController'
       }).
       otherwise({
         redirectTo: '/schedule'

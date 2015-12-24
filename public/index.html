@@ -43,6 +43,14 @@
             <li ng-class="{active: currentNav === 'messages'}"><a href="#/messages">Messages <span class="badge">4</span></a></li>
             <li ng-class="{active: currentNav === 'availability'}"><a href="#/availability">Availability</a></li>
             <li ng-class="{active: currentNav === 'timeoff'}"><a href="#/timeoff">Time Off</a></li>
+
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">HR<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/employees">Employees</a></li>
+                <li><a href="#/roles">Roles</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
         <!--/.nav-collapse -->
@@ -61,10 +69,12 @@
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
   <script src="app.js"></script>
-  <script src="scheduleModule.js"></script>
-  <script src="messagesModule.js"></script>
-  <script src="timeoffModule.js"></script>
-  <script src="availabilityModule.js"></script>
+  <script src="schedule/scheduleModule.js"></script>
+  <script src="messages/messagesModule.js"></script>
+  <script src="timeoff/timeoffModule.js"></script>
+  <script src="availability/availabilityModule.js"></script>
+  <script src="roles/rolesModule.js"></script>
+  <script src="employees/employeesModule.js"></script>
 
 
 </body>
