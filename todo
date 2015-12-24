@@ -1,0 +1,5 @@
+- when ask-to-swap send message to others
+- use websocket/broadcaster to push
+- if one accepts send message back that was accepted
+  and change schedule of both; again use broadcaster
+  to push the schedule update to clients

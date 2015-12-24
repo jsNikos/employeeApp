@@ -1,0 +1,30 @@
+<div class="container roles" ng-switch="showView" ng-cloak>
+  <div ng-switch-default>
+    Roles
+    <div ng-repeat="role in roles">{{role.name}}</div>
+    <button type="button" class="btn btn-primary" ng-click="handleShowRoleCreator()">Create New</button>
+  </div>
+
+  <div ng-switch-when='editor'>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Create new Role</div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" ng-model="editedRole.name">
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-success" ng-click="handleCreateRole(editedRole)">Save</button>
+        <button type="button" class="btn btn-default" ng-click="handleCancelEdit()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+</div>
