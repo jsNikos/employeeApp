@@ -1,8 +1,21 @@
 <div class="container roles" ng-switch="showView" ng-cloak>
   <div ng-switch-default>
-    Roles
-    <div ng-repeat="role in roles">{{role.name}}</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="role in roles" ng-click="handleSelectRole(role)" ng-class="{info: editedRole === role}">
+          <td>{{role.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
     <button type="button" class="btn btn-primary" ng-click="handleShowRoleCreator()">Create New</button>
+    <button type="button" class="btn btn-danger" ng-show="editedRole != undefined"
+            ng-click="handleDeleteRole(editedRole)">Delete</button>
   </div>
 
   <div ng-switch-when='editor'>

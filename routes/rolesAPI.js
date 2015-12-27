@@ -26,4 +26,16 @@ router
       .catch(console.log);
   });
 
+router
+  .route('/deleteRole')
+  .post((req, res) => {
+    roleService
+      .deleteRole(req.body)
+      .then((role) => {
+        res.json(role);
+      })
+      .catch(console.log);
+  });
+
+
 module.exports = router;

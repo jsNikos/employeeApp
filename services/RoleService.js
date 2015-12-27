@@ -14,6 +14,10 @@ class RoleService {
     return Role.create(role);
   }
 
+  deleteRole(role){
+    return Role.findOneAndRemove(role);
+  }
+
 
 }
 
