@@ -1,5 +1,8 @@
 <div class="container roles" ng-switch="showView" ng-cloak>
   <div ng-switch-default>
+    <div class="page-header">
+      <h3>Roles for Employees</h3>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -13,12 +16,17 @@
       </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" ng-click="handleShowRoleCreator()">Create New</button>
+    <button type="button" class="btn btn-success" ng-click="handleShowRoleCreator()">Create New</button>
+    <button type="button" class="btn btn-primary" ng-show="editedRole != undefined"
+      ng-click="handleShowRoleEditor(editedRole)">Edit</button>
     <button type="button" class="btn btn-danger" ng-show="editedRole != undefined"
             ng-click="handleDeleteRole(editedRole)">Delete</button>
   </div>
 
   <div ng-switch-when='editor'>
+    <div class="page-header">
+      <h3>Roles Editor</h3>
+    </div>
     <div class="panel panel-primary">
       <div class="panel-heading">Create new Role</div>
       <div class="panel-body">
@@ -28,7 +36,7 @@
         </div>
       </div>
       <div class="panel-footer">
-        <button type="button" class="btn btn-success" ng-click="handleCreateRole(editedRole)">Save</button>
+        <button type="button" class="btn btn-success" ng-click="handleSaveRole(editedRole)">Save</button>
         <button type="button" class="btn btn-default" ng-click="handleCancelEdit()">Cancel</button>
       </div>
     </div>

@@ -37,5 +37,16 @@ router
       .catch(console.log);
   });
 
+  router
+    .route('/saveRole')
+    .post((req, res) => {
+      roleService
+        .saveRole(req.body)
+        .then((role) => {
+          res.json(role);
+        })
+        .catch(console.log);
+    });
+
 
 module.exports = router;
