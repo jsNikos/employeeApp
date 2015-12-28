@@ -51,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/schedule/api', require('./routes/scheduleAPI'));
 app.use('/roles/api', require('./routes/rolesAPI'));
+app.use('/employees/api', require('./routes/employeesAPI'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

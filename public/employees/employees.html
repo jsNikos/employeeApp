@@ -1,12 +1,47 @@
-<div class="container employees" ng-switch="showView" ng-cloak>
+<div class="container roles" ng-switch="showView" ng-cloak>
   <div ng-switch-default>
+    <div class="page-header">
+      <h3>Employees</h3>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="employee in employees" ng-click="handleSelectEmployee(employee)" ng-class="{info: editedEmployee === employee}">
+          <td>{{employee.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" ng-click="handleShowEmployeeCreator()">Create New</button>
+    <button type="button" class="btn btn-primary" ng-show="editedEmployee != undefined"
+      ng-click="handleShowEmployeeEditor(editedEmployee)">Edit</button>
+    <button type="button" class="btn btn-danger" ng-show="editedEmployee != undefined"
+            ng-click="handleDeleteEmployee(editedEmployee)">Delete</button>
+  </div>
+
+  <div ng-switch-when='editor'>
+    <div class="page-header">
+      <h3>Employees Editor</h3>
+    </div>
     <div class="panel panel-primary">
       <div class="panel-heading">Create new Employee</div>
       <div class="panel-body">
         <div class="form-group">
           <label>Name</label>
-          <input type="text" class="form-control" placeholder="name of employee">
+          <input type="text" class="form-control" ng-model="editedEmployee.name">
         </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" ng-model="editedEmployee.password">
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-success" ng-click="handleSaveEmployee(editedEmployee)">Save</button>
+        <button type="button" class="btn btn-default" ng-click="handleCancelEdit()">Cancel</button>
       </div>
     </div>
 

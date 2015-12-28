@@ -3,18 +3,23 @@
 var Role = require('../models/Role');
 
 class RoleService {
-  constructor() {
-  }
+  constructor() {}
 
-  findRoles(){
+  findRoles() {
     return Role.find();
   }
 
-  createRole(role){
+  createRole(role) {
     return Role.create(role);
   }
 
-  deleteRole(role){
+  saveRole(role) {
+    return Role.findOneAndUpdate({
+      _id: role._id
+    }, role);
+  }
+
+  deleteRole(role) {
     return Role.findOneAndRemove(role);
   }
 

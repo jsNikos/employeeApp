@@ -14,6 +14,10 @@ angular.module('rolesModule', [])
         })
         .catch(console.log);
 
+      $scope.isNewRole = function(role) {
+        return role._id == undefined;
+      }
+
       $scope.handleSelectRole = function(role) {
         $scope.editedRole = role;
       };
@@ -25,18 +29,39 @@ angular.module('rolesModule', [])
         $scope.showView = 'editor';
       };
 
-      $scope.handleDeleteRole = function(role){
+      $scope.handleShowRoleEditor = function(role) {
+        $scope.showView = 'editor';
+      }
+
+      $scope.handleDeleteRole = function(role) {
         $http.post('/roles/api/deleteRole', role)
-          .then(function(resp){
+          .then(function(resp) {
             $scope.editedRole = undefined;
-            _.remove($scope.roles, function(elem){
+            _.remove($scope.roles, function(elem) {
               return elem._id === role._id;
             });
           })
           .catch(console.log);
       };
 
-      $scope.handleCreateRole = function(role) {
+      $scope.handleSaveRole = function(role){
+        if($scope.isNewRole(role)){
+            createRole(role);
+        } else{
+          saveRole(role);
+        }
+      };
+
+      function saveRole(role) {
+        $http.post('/roles/api/saveRole', role)
+          .then(function(resp) {
+            $scope.showView = undefined;
+            $scope.editedRole = undefined;
+          })
+          .catch(console.log);
+      }
+
+      function createRole(role) {
         $http.put('/roles/api/createRole', role)
           .then(function(resp) {
             $scope.roles.push(resp.data);
@@ -44,7 +69,7 @@ angular.module('rolesModule', [])
             $scope.editedRole = undefined;
           })
           .catch(console.log);
-      };
+      }
 
       $scope.handleCancelEdit = function() {
         $scope.showView = undefined;
