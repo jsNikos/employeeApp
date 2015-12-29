@@ -1,8 +1,10 @@
-angular.module('employeesModule', [])
+angular.module('employeesModule', ['localytics.directives'])
   .controller('EmployeesController', ['$scope', '$http',
     function($scope, $http) {
       $scope.employees = undefined;
       $scope.editedEmployee = undefined;
+      $scope.employeeRoles = undefined;
+      $scope.availableRoles = undefined;
 
       $scope.showView = undefined; // editor
 
@@ -31,6 +33,12 @@ angular.module('employeesModule', [])
 
       $scope.handleShowEmployeeEditor = function(role) {
         $scope.showView = 'editor';
+        $http.get('roles/api/findRoles')
+          .then(function(resp) {
+            $scope.availableRoles = resp.data;
+          })
+          .catch(console.log);
+
       }
 
       $scope.handleDeleteEmployee = function(employee) {
@@ -44,10 +52,10 @@ angular.module('employeesModule', [])
           .catch(console.log);
       };
 
-      $scope.handleSaveEmployee = function(employee){
-        if($scope.isNewEmployee(employee)){
-            createEmployee(employee);
-        } else{
+      $scope.handleSaveEmployee = function(employee) {
+        if ($scope.isNewEmployee(employee)) {
+          createEmployee(employee);
+        } else {
           saveEmployee(employee);
         }
       };

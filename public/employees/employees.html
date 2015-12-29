@@ -17,10 +17,8 @@
     </table>
 
     <button type="button" class="btn btn-success" ng-click="handleShowEmployeeCreator()">Create New</button>
-    <button type="button" class="btn btn-primary" ng-show="editedEmployee != undefined"
-      ng-click="handleShowEmployeeEditor(editedEmployee)">Edit</button>
-    <button type="button" class="btn btn-danger" ng-show="editedEmployee != undefined"
-            ng-click="handleDeleteEmployee(editedEmployee)">Delete</button>
+    <button type="button" class="btn btn-primary" ng-show="editedEmployee != undefined" ng-click="handleShowEmployeeEditor(editedEmployee)">Edit</button>
+    <button type="button" class="btn btn-danger" ng-show="editedEmployee != undefined" ng-click="handleDeleteEmployee(editedEmployee)">Delete</button>
   </div>
 
   <div ng-switch-when='editor'>
@@ -29,6 +27,7 @@
     </div>
     <div class="panel panel-primary">
       <div class="panel-heading">Create new Employee</div>
+
       <div class="panel-body">
         <div class="form-group">
           <label>Name</label>
@@ -38,7 +37,16 @@
           <label>Password</label>
           <input type="password" class="form-control" ng-model="editedEmployee.password">
         </div>
+        <div class="form-group">
+          <label>Roles</label>
+          <select chosen multiple class="form-control"
+              ng-options="availableRole.name for availableRole in availableRoles"
+              ng-model="employeeRoles">
+              <option value=""></option>
+          </select>
+        </div>
       </div>
+
       <div class="panel-footer">
         <button type="button" class="btn btn-success" ng-click="handleSaveEmployee(editedEmployee)">Save</button>
         <button type="button" class="btn btn-default" ng-click="handleCancelEdit()">Cancel</button>
@@ -46,10 +54,5 @@
     </div>
 
   </div>
-
-
-
-
-
 
 </div>
