@@ -9,6 +9,7 @@ router
   .get((req, res) => {
     employeeService
       .findEmployees()
+      .populate('roles')
       .then((employees) => {
         res.json(employees);
       })
@@ -19,7 +20,7 @@ router
   .route('/createEmployee')
   .put((req, res) => {
     employeeService
-      .createEmployee(req.body)
+      .createEmployee(req.body)      
       .then((employee) => {
         res.json(employee);
       })

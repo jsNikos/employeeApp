@@ -40,8 +40,8 @@
         <div class="form-group">
           <label>Roles</label>
           <select chosen multiple class="form-control"
-              ng-options="availableRole.name for availableRole in availableRoles"
-              ng-model="employeeRoles">
+              ng-options="availableRole.name for availableRole in availableRoles track by availableRole._id"
+              ng-model="editedEmployee.roles">
               <option value=""></option>
           </select>
         </div>

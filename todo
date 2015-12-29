@@ -1,5 +1,5 @@
 - employee-editor: assign role to employee (from drop-down)
-  The backend should save foreign key refs in employeeRole
+  The backend must populate the 'roles' of the new create doc
 - create login-page
 - create message page
 - create broadcaster service
