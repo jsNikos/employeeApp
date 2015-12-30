@@ -1,8 +1,10 @@
-- employee-editor: assign role to employee (from drop-down)
-  The backend must populate the 'roles' of the new create doc
-- create login-page
+- create login-page / mongo-session-store / redirect to login for all requests
+  which are not authorized (check authorization for each request) and set
+  response-status to 405
 - create message page
 - create broadcaster service
+
+- security: needs mechanism to show login-page immediately when 405 is discovered
 
 - create swapper mechanism in schedule-page
   (first allow all shift to be swapped)

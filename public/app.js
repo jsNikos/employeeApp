@@ -5,7 +5,8 @@ var employeeApp = angular.module('employeeApp', [
     'timeoffModule',
     'availabilityModule',
     'rolesModule',
-    'employeesModule'
+    'employeesModule',
+    'loginModule'
   ])
   .config(['$routeProvider',
     function($routeProvider) {
@@ -34,19 +35,27 @@ var employeeApp = angular.module('employeeApp', [
         templateUrl: 'employees/employees.html',
         controller: 'EmployeesController'
       }).
+      when('/login', {
+        templateUrl: 'login/login.html',
+        controller: 'LoginController'
+      }).
       otherwise({
         redirectTo: '/schedule'
       });
     }
   ])
   .controller('AppController', function($scope, $http, $location) {
-      $scope.currentNav = 'timeoff';
+    $scope.userName = undefined; // logged-in user
 
-      $scope.$on('initialized', function(event, navigationTarget){
-        $scope.currentNav = navigationTarget;
-      });
-
-      $scope.handleNavigation = function(event) {
-
-      };
+    $scope.$on('initialized', function(event, navigationTarget) {
+      $scope.currentNav = navigationTarget;
     });
+
+    $scope.$on('signin', function(event, userName) {
+      $scope.userName = userName;
+    });
+
+    $scope.handleNavigation = function(event) {
+
+    };
+  });

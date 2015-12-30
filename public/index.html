@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="employeeApp">
+<html lang="en" ng-app="employeeApp" ng-cloak>
 
 <head>
   <meta charset="utf-8">
@@ -17,7 +17,7 @@
 
   <!-- Custom styles for this template -->
   <link href="navbar.css" rel="stylesheet">
-  <link href="bower_components/chosen/chosen.min.css" rel="stylesheet">  
+  <link href="bower_components/chosen/chosen.min.css" rel="stylesheet">
   <link href="bower_components/angular-chosen-localytics/chosen-spinner.css" rel="stylesheet">
   <link href="stylesheets/app.css" rel="stylesheet">
 
@@ -54,6 +54,11 @@
               </ul>
             </li>
           </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a ng-show="userName != undefined">{{userName}}</a>
+            </li>
         </div>
         <!--/.nav-collapse -->
       </div>
@@ -79,6 +84,7 @@
   <script src="availability/availabilityModule.js"></script>
   <script src="roles/rolesModule.js"></script>
   <script src="employees/employeesModule.js"></script>
+  <script src="login/loginModule.js"></script>
 
 
 </body>

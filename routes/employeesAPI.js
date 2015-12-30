@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var employeeService = require('../services').employeeService;
+var Employee = require('../models/Employee');
 
 router
   .route('/findEmployees')
@@ -20,7 +21,10 @@ router
   .route('/createEmployee')
   .put((req, res) => {
     employeeService
-      .createEmployee(req.body)      
+      .createEmployee(req.body)
+      .then((employee) => {
+        return Employee.populate(employee, {path: 'roles'});
+      })
       .then((employee) => {
         res.json(employee);
       })
