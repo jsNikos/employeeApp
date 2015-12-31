@@ -3,16 +3,13 @@
 var express = require('express');
 var router = express.Router();
 var authenticationService = require('../services').authenticationService;
+var passport = require('passport');
 
 router
   .route('/signin')
-  .post((req, res) => {
-    authenticationService
-      .authenticate(req)
-      .then(() => {
-        res.json({});
-      })
-      .catch(console.log);
-  });
+  .post(passport.authenticate('local'),
+    function(req, res) {
+      res.json({});
+    });
 
 module.exports = router;

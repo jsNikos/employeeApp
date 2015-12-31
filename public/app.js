@@ -45,14 +45,14 @@ var employeeApp = angular.module('employeeApp', [
     }
   ])
   .controller('AppController', function($scope, $http, $location) {
-    $scope.userName = undefined; // logged-in user
+    $scope.username = undefined; // logged-in user
 
     $scope.$on('initialized', function(event, navigationTarget) {
       $scope.currentNav = navigationTarget;
     });
 
-    $scope.$on('signin', function(event, userName) {
-      $scope.userName = userName;
+    $scope.$on('signin', function(event, username) {
+      $scope.username = username;
     });
 
     $scope.handleNavigation = function(event) {

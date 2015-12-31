@@ -6,6 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var httpProxy = require('http-proxy');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -48,6 +51,47 @@ app.use('/stylesheets', require('less-middleware')(
   path.join(__dirname, 'public', 'stylesheets'), {}
 ));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'notverysecurrre'
+}));
+
+var employeeService = require('./services').employeeService;
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+passport.deserializeUser((id, done) => {
+  employeeService.findById(id)
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((err) => {
+      done(err);
+    });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    employeeService
+      .findOne({
+        name: username
+      })
+      .then((user) => {
+        if (!user) {
+          return done(null, false, {
+            message: 'Incorrect username.'
+          });
+        }
+        if (!(user.password === password)) {
+          return done(null, false, {
+            message: 'Incorrect password.'
+          });
+        }
+        return done(null, user);
+      })
+      .catch(done)
+  }));
 
 app.use('/schedule/api', require('./routes/scheduleAPI'));
 app.use('/roles/api', require('./routes/rolesAPI'));

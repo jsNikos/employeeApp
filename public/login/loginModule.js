@@ -2,16 +2,16 @@ angular.module('loginModule', [])
   .controller('LoginController', ['$scope', '$http',
     function($scope, $http) {
       $scope.$emit('initialized', 'login');
-      $scope.userName = undefined;
+      $scope.username = undefined;
       $scope.password = undefined;
 
-      $scope.handleSignIn = function(userName, password) {
+      $scope.handleSignIn = function(username, password) {
         $http.post('/login/api/signin', {
-            userName: userName,
+            username: username,
             password: password
           })
           .then(function(){
-            $scope.$emit('signin', userName);
+            $scope.$emit('signin', username);
           })
           .catch(console.log);
       };

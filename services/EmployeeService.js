@@ -5,6 +5,14 @@ var Employee = require('../models/Employee');
 class EmployeeService {
   constructor() {}
 
+  findOne(attr){
+    return Employee.findOne(attr);
+  }
+
+  findById(id){
+    return Employee.findById(id);
+  }
+
   findEmployees() {
     return Employee.find();
   }
