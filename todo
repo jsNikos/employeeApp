@@ -1,10 +1,13 @@
 - create login-page / mongo-session-store / redirect to login for all requests
   which are not authorized (check authorization for each request) and set
-  response-status to 405
+  response-status to 401, in case login fails display message
+- set-up session store (mongo-session, clean-up expired sessions)
+- authenticationService.findUser(req)  req.user (passport provides this)
+  (based on this the broadcaster is registering subscribtions)
 - create message page
 - create broadcaster service
 
-- security: needs mechanism to show login-page immediately when 405 is discovered
+- security: needs mechanism to show login-page immediately when 401 is discovered
 
 - create swapper mechanism in schedule-page
   (first allow all shift to be swapped)
@@ -24,3 +27,9 @@
 - details:
 * the Employee.name must be unique
 * passwords never return in API, passwords must be md5-hashed in db
+* error logs thrown from 500-error handler dosn't contain traces
+
+- bugs:
+ * 1. select employee
+   2. delete Employee
+   3. press create Employee - the form is filled already

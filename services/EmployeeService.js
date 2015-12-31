@@ -34,4 +34,4 @@ class EmployeeService {
 
 }
 
-module.exports = EmployeeService;
+module.exports = new EmployeeService();

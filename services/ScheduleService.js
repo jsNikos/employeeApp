@@ -68,4 +68,4 @@ class ScheduleService {
   }
 }
 
-module.exports = ScheduleService;
+module.exports = new ScheduleService();

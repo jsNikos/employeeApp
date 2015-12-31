@@ -1,17 +1,31 @@
 "use strict";
 
-var employeeService = require('./index').employeeService;
+var employeeService = require('./EmployeeService');
 
 class AuthenticationService {
   constructor() {}
 
-  authenticate(req) {
-    return new Promise(function(resolve, reject){
-        resolve();
-    });
+  authenticate(username, password, done) {
+    employeeService
+      .findOne({
+        name: username
+      })
+      .then((user) => {
+        if (!user) {
+          return done(null, false, {
+            message: 'Incorrect username.'
+          });
+        }
+        if (!(user.password === password)) {
+          return done(null, false, {
+            message: 'Incorrect password.'
+          });
+        }
+        return done(null, user);
+      })
+      .catch(done)
   }
-
 
 }
 
-module.exports = AuthenticationService;
+module.exports = new AuthenticationService();

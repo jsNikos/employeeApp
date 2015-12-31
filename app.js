@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var services = require('./services');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -55,14 +56,13 @@ app.use(session({
   secret: 'notverysecurrre'
 }));
 
-var employeeService = require('./services').employeeService;
 app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 passport.deserializeUser((id, done) => {
-  employeeService.findById(id)
+  services.employeeService.findById(id)
     .then((user) => {
       done(null, user);
     })
@@ -70,28 +70,7 @@ passport.deserializeUser((id, done) => {
       done(err);
     });
 });
-
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    employeeService
-      .findOne({
-        name: username
-      })
-      .then((user) => {
-        if (!user) {
-          return done(null, false, {
-            message: 'Incorrect username.'
-          });
-        }
-        if (!(user.password === password)) {
-          return done(null, false, {
-            message: 'Incorrect password.'
-          });
-        }
-        return done(null, user);
-      })
-      .catch(done)
-  }));
+passport.use(new LocalStrategy(services.authenticationService.authenticate));
 
 app.use('/schedule/api', require('./routes/scheduleAPI'));
 app.use('/roles/api', require('./routes/rolesAPI'));
