@@ -10,6 +10,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var services = require('./services');
+var MongoStore = require('connect-mongo')(session);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -53,7 +54,11 @@ app.use('/stylesheets', require('less-middleware')(
 ));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-  secret: 'notverysecurrre'
+  secret: 'notverysecurrre',
+  store: new MongoStore({
+    mongooseConnection: db,
+    ttl: 30 * 60
+  })
 }));
 
 app.use(passport.initialize());

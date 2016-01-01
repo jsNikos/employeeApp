@@ -1,7 +1,7 @@
-- create login-page / mongo-session-store / redirect to login for all requests
+- create login-page / redirect to login for all requests
   which are not authorized (check authorization for each request) and set
-  response-status to 401, in case login fails display message
-- set-up session store (mongo-session, clean-up expired sessions)
+  response-status to 401 or 405??
+
 - authenticationService.findUser(req)  req.user (passport provides this)
   (based on this the broadcaster is registering subscribtions)
 - create message page
