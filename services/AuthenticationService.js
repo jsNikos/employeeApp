@@ -5,6 +5,10 @@ var employeeService = require('./EmployeeService');
 class AuthenticationService {
   constructor() {}
 
+  findAuthenticatedUser(req){
+    return req.user;
+  }
+
   authenticate(username, password, done) {
     employeeService
       .findOne({

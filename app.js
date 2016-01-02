@@ -77,10 +77,12 @@ passport.deserializeUser((id, done) => {
 });
 passport.use(new LocalStrategy(services.authenticationService.authenticate));
 
+app.use('/init/api', require('./routes/initAPI'));
 app.use('/schedule/api', require('./routes/scheduleAPI'));
 app.use('/roles/api', require('./routes/rolesAPI'));
 app.use('/employees/api', require('./routes/employeesAPI'));
 app.use('/login/api', require('./routes/loginAPI'));
+app.use('/message/api', require('./routes/messageAPI'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

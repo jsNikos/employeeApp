@@ -3,5 +3,6 @@ module.exports = {
   scheduleService: require('./ScheduleService'),
   roleService: require('./RoleService'),
   employeeService: require('./EmployeeService'),
-  authenticationService: require('./AuthenticationService')
+  authenticationService: require('./AuthenticationService'),
+  messageService: require('./MessageService')
 }

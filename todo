@@ -1,16 +1,18 @@
-- create login-page / redirect to login for all requests
-  which are not authorized (check authorization for each request) and set
-  response-status to 401 or 405??
-
-- authenticationService.findUser(req)  req.user (passport provides this)
-  (based on this the broadcaster is registering subscribtions)
-- create message page
+- create message page  (create-button: opens form, list of all messages on click
+  show the message in messageView, and action buttons)
 - create broadcaster service
+  (broadcaster adds connections based on authenticationService.findUser(req))
+
+- redirect to login for all requests
+  which are not authorized (check authorization for each request) and set
+  response-status to 403 (un-authorized) 401 (un-authenticated)
+  Protect '/' server-side by default, all others like /login must exclude
+  themself from there
 
 - security: needs mechanism to show login-page immediately when 401 is discovered
 
 - create swapper mechanism in schedule-page
-  (first allow all shift to be swapped)
+  (first allow all shift to be swapped) and add /requestSwap and /swap to API
 * when ask-to-swap send message to others
 * use websocket/broadcaster to push
 * if one accepts send message back that was accepted

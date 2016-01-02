@@ -42,7 +42,7 @@
         <div id="navbar" class="navbar-collapse collapse" ng-click="handleNavigation($event)">
           <ul class="nav navbar-nav">
             <li ng-class="{active: currentNav === 'schedule'}"><a href="#/schedule">Schedule</a></li>
-            <li ng-class="{active: currentNav === 'messages'}"><a href="#/messages">Messages <span class="badge">4</span></a></li>
+            <li ng-class="{active: currentNav === 'messages'}"><a href="#/messages">Messages <span class="badge">{{messages.length}}</span></a></li>
             <li ng-class="{active: currentNav === 'availability'}"><a href="#/availability">Availability</a></li>
             <li ng-class="{active: currentNav === 'timeoff'}"><a href="#/timeoff">Time Off</a></li>
 

@@ -14,7 +14,9 @@ router
       .then((employees) => {
         res.json(employees);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 router
@@ -23,12 +25,16 @@ router
     employeeService
       .createEmployee(req.body)
       .then((employee) => {
-        return Employee.populate(employee, {path: 'roles'});
+        return Employee.populate(employee, {
+          path: 'roles'
+        });
       })
       .then((employee) => {
         res.json(employee);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 router
@@ -39,19 +45,23 @@ router
       .then((employee) => {
         res.json(employee);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
-  router
-    .route('/saveEmployee')
-    .post((req, res) => {
-      employeeService
-        .saveEmployee(req.body)
-        .then((employee) => {
-          res.json(employee);
-        })
-        .catch(console.log);
-    });
+router
+  .route('/saveEmployee')
+  .post((req, res) => {
+    employeeService
+      .saveEmployee(req.body)
+      .then((employee) => {
+        res.json(employee);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  });
 
 
 module.exports = router;

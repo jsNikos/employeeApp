@@ -2,7 +2,6 @@
 
 var express = require('express');
 var router = express.Router();
-var authenticationService = require('../services').authenticationService;
 var passport = require('passport');
 
 router

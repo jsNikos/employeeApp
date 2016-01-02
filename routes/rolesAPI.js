@@ -12,7 +12,9 @@ router
       .then((roles) => {
         res.json(roles);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 router
@@ -23,7 +25,9 @@ router
       .then((role) => {
         res.json(role);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 router
@@ -34,19 +38,23 @@ router
       .then((role) => {
         res.json(role);
       })
-      .catch(console.log);
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
-  router
-    .route('/saveRole')
-    .post((req, res) => {
-      roleService
-        .saveRole(req.body)
-        .then((role) => {
-          res.json(role);
-        })
-        .catch(console.log);
-    });
+router
+  .route('/saveRole')
+  .post((req, res) => {
+    roleService
+      .saveRole(req.body)
+      .then((role) => {
+        res.json(role);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  });
 
 
 module.exports = router;
