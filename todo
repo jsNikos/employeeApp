@@ -1,7 +1,13 @@
-- create message page  (create-button: opens form, list of all messages on click
-  show the message in messageView, and action buttons)
+- create message page  (list of all messages displayed as thumbmails
+  with 'read'-button, onclick: show the message in messageView, and action buttons)
 - create broadcaster service
   (broadcaster adds connections based on authenticationService.findUser(req))
+  The client (has automatic reconnect as options and running in webworker)
+  this becomes own bower repo
+  The broadcast must check authoritation of connection on each send/receive event.
+  The check is:  connection.findSessionById(connection.sessionId) check user-attribute
+  This only, in cases when the topic requires authentication. Close
+  otherwise.
 
 - redirect to login for all requests
   which are not authorized (check authorization for each request) and set
@@ -29,7 +35,7 @@
 - details:
 * the Employee.name must be unique
 * passwords never return in API, passwords must be md5-hashed in db
-* error logs thrown from 500-error handler dosn't contain traces
+
 
 - bugs:
  * 1. select employee
