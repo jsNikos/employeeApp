@@ -22,10 +22,10 @@ router
 
 router
   .route('/create')
-  .post((req, res) => {
-    let employee = services.authenticationService.findAuthenticatedUser(req);
+  .put((req, res) => {
+    let authenticatedUser = services.authenticationService.findAuthenticatedUser(req);
     services.messageService
-      .create(req.body, fromEmployee)
+      .create(req.body, authenticatedUser)
       .then((message) => {
         res.json(message);
       })

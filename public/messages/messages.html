@@ -1,1 +1,53 @@
-<div>messages</div>
+<div class="container messages" ng-switch="showView" ng-cloak>
+  <div ng-switch-default>
+    <div class="page-header">
+      <h3>Messages</h3>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>title</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="message in messages" ng-click="handleSelectMessage(message)">
+          <td>{{message.content.title}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button type="button" class="btn btn-success" ng-click="handleShowMessageCreator()">Create New</button>
+
+  </div>
+
+  <div ng-switch-when='editor'>
+    <div class="page-header">
+      <h3>Send a Message</h3>
+    </div>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <div class="form-group">
+          <label>Receipient</label>
+          <select chosen class="form-control" ng-options="availableReceipient.name for availableReceipient in availableReceipients track by availableReceipient._id" ng-model="newMessage.to">
+            <option value=""></option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" ng-model="newMessage.content.title">
+        </div>
+        <div class="form-group">
+          <label>Content</label>
+          <textarea class="form-control" placeholder="Write your message here" ng-model="newMessage.content.body"></textarea>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button type="button" class="btn btn-success" ng-click="handleSendMessage(newMessage)">Send</button>
+        <button type="button" class="btn btn-default" ng-click="handleCancelCreate()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
