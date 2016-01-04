@@ -10,6 +10,7 @@ router
     let authenticatedUser = services.authenticationService.findAuthenticatedUser(req);
     services.messageService
      .findForEmployee(authenticatedUser)
+     .populate('from to')
      .then((messages) => {
        res.json({
          user: authenticatedUser,

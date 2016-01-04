@@ -20,8 +20,8 @@ class MessageService {
     });
   }
 
-  confirm(message){
-    message.confirmed = Date.now;
+  confirm(message) {
+    message.confirmed = Date.now();
     return this.save(message);
   }
 

@@ -1,13 +1,22 @@
 - create message page  (list of all messages displayed as thumbmails
   with 'read'-button, onclick: show the message in messageView, and action buttons)
+  When action buttons exists don't show 'confirm' and show 'cancel' and the actions
 - create broadcaster service
   (broadcaster adds connections based on authenticationService.findUser(req))
   The client (has automatic reconnect as options and running in webworker)
   this becomes own bower repo
-  The broadcast must check authoritation of connection on each send/receive event.
+  The broadcast must check authorization of connection on each send/receive event.
   The check is:  connection.findSessionById(connection.sessionId) check user-attribute
   This only, in cases when the topic requires authentication. Close
   otherwise.
+
+  - create swapper mechanism in schedule-page
+    (first allow all shift to be swapped) and add /requestSwap and /swap to API
+  * when ask-to-swap send message to others - with the action: 'request swap'
+  * use websocket/broadcaster to push
+  * if one accepts send message back that was accepted
+    and change schedule of both; again use broadcaster
+    to push the schedule update to clients
 
 - redirect to login for all requests
   which are not authorized (check authorization for each request) and set
@@ -16,14 +25,6 @@
   themself from there
 
 - security: needs mechanism to show login-page immediately when 401 is discovered
-
-- create swapper mechanism in schedule-page
-  (first allow all shift to be swapped) and add /requestSwap and /swap to API
-* when ask-to-swap send message to others
-* use websocket/broadcaster to push
-* if one accepts send message back that was accepted
-  and change schedule of both; again use broadcaster
-  to push the schedule update to clients
 
 - create schedule
 * something what works quick in mobile
@@ -35,6 +36,8 @@
 - details:
 * the Employee.name must be unique
 * passwords never return in API, passwords must be md5-hashed in db
+* error-handling still bad: when new Error(err) is thrown in promise's catch
+  it isn't recognized by app.error-handler, seems to be eaten by promise
 
 
 - bugs:

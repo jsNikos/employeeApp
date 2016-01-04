@@ -6,12 +6,13 @@ angular.module('messagesModule', [])
       $scope.newMessage = undefined;
       $scope.availableReceipients = undefined;
 
-      $scope.showView = undefined; // editor
+      $scope.showView = undefined; // editor, message
 
       $scope.$emit('initialized', 'messages');
 
       $scope.handleSelectMessage = function(message) {
         $scope.selectedMessage = message;
+        $scope.showView = 'message';
       };
 
       $scope.handleShowMessageCreator = function() {
@@ -30,19 +31,33 @@ angular.module('messagesModule', [])
         $scope.showView = 'editor';
       };
 
-      $scope.handleSendMessage = function(message){
+      $scope.handleSendMessage = function(message) {
         $http.put('/message/api/create', message)
           .then(function(resp) {
             $scope.showView = undefined;
             $scope.newMessage = undefined;
           })
           .catch(console.log);
-      }
+      };
+
+      $scope.handleConfirmMessage = function(message) {
+        $http.post('/message/api/confirm', message)
+          .then(function(resp){
+            $scope.showView = undefined;
+            $scope.newMessage = undefined;
+          })
+          .catch(console.log);
+      };
+
+      $scope.handleCancelMessage = function() {
+        $scope.showView = undefined;
+        $scope.newMessage = undefined;
+      };
 
       $scope.handleCancelCreate = function() {
         $scope.showView = undefined;
         $scope.newMessage = undefined;
-      }
+      };
 
     }
   ]);

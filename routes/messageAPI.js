@@ -39,7 +39,7 @@ router
   .post((req, res) => {
     let authenticatedUser = services.authenticationService.findAuthenticatedUser(req);
     let message = req.body;
-    if (authenticatedUser._id !== message.to._id) {
+    if (authenticatedUser._id != message.to._id) {
       res.send(403);
       return;
     }
@@ -49,7 +49,8 @@ router
         res.json(message);
       })
       .catch((err) => {
-        throw new Error(err);
+        console.log(err);
+        console.log(err.stack);
       });
   });
 
