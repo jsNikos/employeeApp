@@ -1,4 +1,4 @@
-angular.module('messagesModule', [])
+angular.module('messagesModule', ['localytics.directives'])
   .controller('MessagesController', ['$scope', '$http',
     function($scope, $http) {
       $scope.roles = undefined;
@@ -44,19 +44,27 @@ angular.module('messagesModule', [])
         $http.post('/message/api/confirm', message)
           .then(function(resp){
             $scope.showView = undefined;
-            $scope.newMessage = undefined;
+            $scope.selectedMessage = undefined;
           })
           .catch(console.log);
       };
 
       $scope.handleCancelMessage = function() {
         $scope.showView = undefined;
-        $scope.newMessage = undefined;
+        $scope.selectedMessage = undefined;
       };
 
       $scope.handleCancelCreate = function() {
         $scope.showView = undefined;
         $scope.newMessage = undefined;
+      };
+
+      $scope.handleMessageAction = function(action, message){
+        $hhtp.post(action.url, message)
+          .then(function(resp){
+            $scope.showView = undefined;
+            $scope.selectedMessage = undefined;
+          });
       };
 
     }

@@ -2,9 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Shift', new Schema({
-  employee: String,
+  employee: {
+    type: Schema.Types.ObjectId,
+    ref: 'Employee'
+  },
   scheduleDate: Date,
   starttime: Date,
   endtime: Date,
-  role: String
+  role: {
+    type: Schema.Types.ObjectId,
+    ref: 'Role'
+  }
 }));

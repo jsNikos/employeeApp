@@ -6,22 +6,18 @@ angular.module('scheduleModule', [])
 
       $scope.selectedShift = undefined;
       $scope.swappers = undefined; // [Shift]
-      $scope.selectedSwappers = undefined;
+      $scope.selectedSwappers = undefined; // Shift
 
       $scope.$emit('initialized', 'schedule');
 
-      $http.get('/schedule/api/init', {
-          employee: 'niko'
-        })
+      $http.get('/schedule/api/init')
         .then(function(resp) {
           $scope.model = resp.data;
         })
         .catch(console.log);
 
       $scope.handleSelectShift = function(shift) {
-        $http.get('/schedule/api/swappers', {
-            shift: shift
-          })
+        $http.post('/schedule/api/findPossibleSwappers', shift)
           .then(function(resp) {
             $scope.swappers = resp.data;
             $scope.selectedShift = shift;
@@ -35,11 +31,22 @@ angular.module('scheduleModule', [])
       }
 
       $scope.handleAskAll = function(selectedShift, swappers) {
+        requestSwap(selectedShift, swappers);
         resetSwapperView();
       }
 
       $scope.handleAskSelected = function(selectedShift, selectedSwappers) {
+        requestSwap(selectedShift, swappers);
         resetSwapperView();
+      }
+
+      function requestSwap(selectedShift, swappers) {
+        $http.put('/schedule/api/requestSwap', {
+            shift: selectedShift,
+            swappers: swappers
+          })
+          .then(resetSwapperView)
+          .catch(console.log);
       }
 
       function resetSwapperView() {

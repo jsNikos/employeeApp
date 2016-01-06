@@ -83,6 +83,7 @@ app.use('/roles/api', require('./routes/rolesAPI'));
 app.use('/employees/api', require('./routes/employeesAPI'));
 app.use('/login/api', require('./routes/loginAPI'));
 app.use('/message/api', require('./routes/messageAPI'));
+app.use('/scheduler/api', require('./routes/schedulerAPI'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

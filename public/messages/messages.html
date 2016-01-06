@@ -6,24 +6,19 @@
     <div class="form-group">
       <button type="button" class="btn btn-success" ng-click="handleShowMessageCreator()">Create New</button>
     </div>
+
     <div class="row">
       <div class="col-sm-4" ng-repeat="message in messages">
-        <div class="thumbnail">
-          <div class="caption">
-            <h3 class="from">{{message.from.name}}</h3>
-            <div class="row">
-              <h4 class="col-sm-12 title">{{message.content.title}}</h4>
-            </div>
-            <div class="row">
-              <h4 class="col-sm-6">Received:</h4>
-              <h4 class="col-sm-6">{{message.send | date:'yyyy-MM-dd h:mma'}}</h4>
-            </div>
-            <div class="row read-button">
-              <button type="button" class="btn btn-primary" ng-click="handleSelectMessage(message)">Read</button>
-            </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading"><b>{{message.from.name}}</b> / {{message.send | date:'yyyy-MM-dd h:mm a'}}</div>
+          <div class="panel-body">
+            <h4>{{message.content.title}}</h4>
           </div>
-
+          <div class="panel-footer">
+            <button type="button" class="btn btn-primary" ng-click="handleSelectMessage(message)">Read</button>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -31,17 +26,15 @@
 
   <div ng-switch-when='message'>
     <div class="panel panel-primary">
-      <div class="panel-heading">Message from {{selectedMessage.from.name}}</div>
+      <div class="panel-heading">
+        Message from <b>{{selectedMessage.from.name}}</b> / received at <b>{{selectedMessage.send | date:'yyyy-MM-dd h:mm a'}}</b></div>
       <div class="panel-body">
-        <h3>{{selectedMessage.from.name}}</h3>
-        <div class="row">
-          <h4 class="col-sm-6">Received:</h4>
-          <h4 class="col-sm-6">{{selectedMessage.send | date:'yyyy-MM-dd h:mma'}}</h4>
-        </div>
+        <h4>{{selectedMessage.content.title}}</h4>
         <div>{{selectedMessage.content.body}}</div>
       </div>
       <div class="panel-footer">
-        <button type="button" class="btn btn-success" ng-click="handleConfirmMessage(selectedMessage)">Confirm</button>
+        <button type="button" class="btn btn-success" ng-click="handleConfirmMessage(selectedMessage)" ng-show="selectedMessage.actions == undefined || selectedMessage.actions.length === 0">Confirm</button>
+        <button type="button" class="btn btn-primary" ng-repeat="action in selectedMessage.actions" ng-click="handleMessageAction(action, selectedMessage)">{{action.name}}</button>
         <button type="button" class="btn btn-default" ng-click="handleCancelMessage()">Cancel</button>
       </div>
     </div>

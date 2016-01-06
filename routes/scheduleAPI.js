@@ -3,28 +3,58 @@
 var express = require('express');
 var router = express.Router();
 var services = require('../services');
-var scheduleService = services.scheduleService;
+var schedulerService = services.schedulerService;
 
 router
   .route('/init')
   .get((req, res) => {
-    let model = {
-      weekOf: 'Monday 2015-15-21'
-    };
-    model.schedules = scheduleService.findSchedules(req.body.employee);
-    res.json(model);
-    //TODO this becomes promise!!
-    // and catch so:
-    //(err) => {
-      //throw new Error(err);
-    //}
+    let dateInWeek = Date.now();
+    let employee = services.authenticationService.findAuthenticatedUser(req);
+    schedulerService
+      .findSchedules(dateInWeek, employee)
+      .populate({
+        path: 'shifts',
+        match: {employee: employee},
+        populate: {
+          path: 'role employee'
+        }
+      })
+      .then((schedules) => {
+        res.json({
+          weekOf: dateInWeek,
+          schedules: schedules
+        });
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 router
-  .route('/swappers')
-  .get((req, res) => {
-    let result = scheduleService.findSwappers(req.body.shift);
-    res.json(result);
+  .route('/findPossibleSwappers')
+  .post((req, res) => {
+    schedulerService
+      .findPossibleSwappers(req.body)
+      .populate('role employee')
+      .then((swappers) => {
+        res.json(swappers);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  });
+
+router
+  .route('/requestSwap')
+  .put((req, resp) => {
+    schedulerService
+      .requestSwap(req.body.shift, req.body.swappers)
+      .then(() => {
+        res.json({});
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   });
 
 

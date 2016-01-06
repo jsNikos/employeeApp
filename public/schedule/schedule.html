@@ -1,7 +1,7 @@
 <div class="container scheduler" ng-switch="showView" ng-cloak>
   <div ng-switch-default>
     <nav>
-      <h3><a href="#" class="previous">Week of {{model.weekOf}}</a></h3>
+      <h3><a href="#" class="previous">Week of {{model.weekOf | date:'EEEE d MMM yyyy'}}</a></h3>
       <ul class="pager">
         <li><a href="#" class="previous">Previous</a></li>
         <li><a href="#" class="next">Next</a></li>
@@ -12,12 +12,12 @@
       <div class="col-sm-4" ng-repeat="schedule in model.schedules">
         <div class="thumbnail">
           <div class="caption">
-            <h3>{{schedule.dayName}}</h3>
+            <h3>{{schedule.scheduleDate | date:'EEEE'}}</h3>
 
             <div class="panel panel-primary" ng-repeat="shift in schedule.shifts" ng-click="handleSelectShift(shift)">
-              <div class="panel-heading">{{shift.role}}</div>
+              <div class="panel-heading">{{shift.role.name}}</div>
               <div class="panel-body">
-                {{shift.starttime}}-{{shift.endtime}}
+                {{shift.starttime | date:'h:mm a'}}-{{shift.endtime | date:'h:mm a'}}
               </div>
             </div>
 
@@ -30,13 +30,13 @@
   <div ng-switch-when="swapper">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        Swapping shift {{selectedShift.role}} {{selectedShift.starttime}}-{{selectedShift.endtime}} at {{selectedShift.scheduleDate}}
+        Swapping shift {{selectedShift.role.name}} {{selectedShift.starttime | date:'h:mm a'}}-{{selectedShift.endtime | date:'h:mm a'}} at {{selectedShift.scheduleDate | date:'EEEE d MMM yyyy '}}
       </div>
       <div class="panel-body">
         <h3>Possibilities for swapping</h3>
         <select multiple class="form-control" ng-model="selectedSwappers">
           <option ng-repeat="swapper in swappers">
-            {{swapper.employee}} {{swapper.role}} {{swapper.scheduleDate}} {{swapper.starttime}}-{{swapper.endtime}}
+            {{swapper.employee.name}} {{swapper.role.name}} {{swapper.scheduleDate | date:'EEEE d MMM yyyy'}} {{swapper.starttime | date:'h:mm a'}}-{{swapper.endtime | date:'h:mm a'}}
           </option>
         </select>
       </div>

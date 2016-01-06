@@ -1,6 +1,6 @@
 
 module.exports = {
-  scheduleService: require('./ScheduleService'),
+  schedulerService: require('./SchedulerService'),
   roleService: require('./RoleService'),
   employeeService: require('./EmployeeService'),
   authenticationService: require('./AuthenticationService'),

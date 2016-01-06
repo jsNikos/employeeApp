@@ -23,6 +23,7 @@ module.exports = mongoose.model('Message', new Schema({
   actions: [{
     name: String,
     url: String,
+    data: Schema.Types.Mixed,
     performed: Date
   }]
 }));

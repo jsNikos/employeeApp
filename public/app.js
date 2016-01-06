@@ -1,12 +1,13 @@
 var employeeApp = angular.module('employeeApp', [
-    'ngRoute',
+    'ngRoute',    
     'scheduleModule',
     'messagesModule',
     'timeoffModule',
     'availabilityModule',
     'rolesModule',
     'employeesModule',
-    'loginModule'
+    'loginModule',
+    'schedulerModule'
   ])
   .config(['$routeProvider',
     function($routeProvider) {
@@ -38,6 +39,10 @@ var employeeApp = angular.module('employeeApp', [
       when('/login', {
         templateUrl: 'login/login.html',
         controller: 'LoginController'
+      }).
+      when('/scheduler', {
+        templateUrl: 'scheduler/scheduler.html',
+        controller: 'SchedulerController'
       }).
       otherwise({
         redirectTo: '/schedule'
