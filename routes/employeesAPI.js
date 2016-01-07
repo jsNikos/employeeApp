@@ -14,9 +14,7 @@ router
       .then((employees) => {
         res.json(employees);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -32,9 +30,7 @@ router
       .then((employee) => {
         res.json(employee);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -45,9 +41,7 @@ router
       .then((employee) => {
         res.json(employee);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -58,9 +52,7 @@ router
       .then((employee) => {
         res.json(employee);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 

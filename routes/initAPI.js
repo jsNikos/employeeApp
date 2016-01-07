@@ -17,9 +17,7 @@ router
          messages: messages
        });
      })
-     .catch(function(err){
-       throw new Error(err);
-     });
+     .catch(handleError);
   });
 
 module.exports = router;

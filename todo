@@ -33,8 +33,6 @@
 - details:
 * the Employee.name must be unique
 * passwords never return in API, passwords must be md5-hashed in db
-* error-handling still bad: when new Error(err) is thrown in promise's catch
-  it isn't recognized by app.error-handler, seems to be eaten by promise
 * make angular working with requirejs or system
 
 

@@ -12,11 +12,7 @@ router
       .then((shift) => {
         res.json(shift);
       })
-      .catch((err) => {
-        console.log(err);
-          console.log(err.stack);
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 module.exports = router;

@@ -1,6 +1,7 @@
 "use strict";
 
 var moment = require('moment');
+var _ = require('lodash');
 var Schedule = require('../models/Schedule');
 var Shift = require('../models/Shift');
 var messageService = require('./MessageService');

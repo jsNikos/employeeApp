@@ -12,9 +12,7 @@ router
       .then((roles) => {
         res.json(roles);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -25,9 +23,7 @@ router
       .then((role) => {
         res.json(role);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -38,9 +34,7 @@ router
       .then((role) => {
         res.json(role);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -51,9 +45,7 @@ router
       .then((role) => {
         res.json(role);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 

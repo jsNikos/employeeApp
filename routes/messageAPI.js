@@ -15,9 +15,7 @@ router
       .then((messages) => {
         res.json(messages);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -29,9 +27,7 @@ router
       .then((message) => {
         res.json(message);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -48,10 +44,7 @@ router
       .then((message) => {
         res.json(message);
       })
-      .catch((err) => {
-        console.log(err);
-        console.log(err.stack);
-      });
+      .catch(handleError);
   });
 
 

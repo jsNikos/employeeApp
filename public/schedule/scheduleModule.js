@@ -35,8 +35,8 @@ angular.module('scheduleModule', [])
         resetSwapperView();
       }
 
-      $scope.handleAskSelected = function(selectedShift, selectedSwappers) {
-        requestSwap(selectedShift, swappers);
+      $scope.handleAskSelected = function(shift, swappers) {
+        requestSwap(shift, swappers);
         resetSwapperView();
       }
 

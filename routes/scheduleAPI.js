@@ -25,9 +25,7 @@ router
           schedules: schedules
         });
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
@@ -39,22 +37,18 @@ router
       .then((swappers) => {
         res.json(swappers);
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 router
   .route('/requestSwap')
-  .put((req, resp) => {
+  .put((req, res) => {
     schedulerService
       .requestSwap(req.body.shift, req.body.swappers)
       .then(() => {
         res.json({});
       })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      .catch(handleError);
   });
 
 
