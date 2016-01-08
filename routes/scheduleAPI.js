@@ -14,7 +14,9 @@ router
       .findSchedules(dateInWeek, employee)
       .populate({
         path: 'shifts',
-        match: {employee: employee},
+        match: {
+          employee: employee
+        },
         populate: {
           path: 'role employee'
         }
@@ -51,7 +53,15 @@ router
       .catch(handleError);
   });
 
-
-
+router
+  .route('/swap')
+  .post((req, res) => {
+    schedulerService
+      .swap(req.body)
+      .then(() => {
+        res.json({});
+      })
+      .catch(handleError);
+  });
 
 module.exports = router;

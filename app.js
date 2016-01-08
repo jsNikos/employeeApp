@@ -28,7 +28,7 @@ db.once('open', function(callback) {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-global.handleError = function(err){
+global.handleError = function(err) {
   console.log(err);
   console.log(err.stack);
 };

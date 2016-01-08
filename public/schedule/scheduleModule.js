@@ -6,7 +6,7 @@ angular.module('scheduleModule', [])
 
       $scope.selectedShift = undefined;
       $scope.swappers = undefined; // [Shift]
-      $scope.selectedSwappers = undefined; // Shift
+      $scope.selectedSwappers = []; // Shift
 
       $scope.$emit('initialized', 'schedule');
 
@@ -55,4 +55,12 @@ angular.module('scheduleModule', [])
         $scope.selectedSwappers = undefined;
       }
     }
-  ]);
+  ])
+  .filter('swapperFilter', ['$filter', function($filter){
+    return function(swapper){
+      return  swapper.employee.name + ' ' + swapper.role.name + ' ' +
+        $filter('date')(swapper.scheduleDate, 'EEEE d MMM yyyy') + ' ' +
+        $filter('date')(swapper.starttime, 'h:mm a') + ' - ' +
+        $filter('date')(swapper.endtime, 'h:mm a');
+    };
+  }]);

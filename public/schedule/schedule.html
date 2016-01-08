@@ -34,11 +34,13 @@
       </div>
       <div class="panel-body">
         <h3>Possibilities for swapping</h3>
-        <select multiple class="form-control" ng-model="selectedSwappers">
-          <option ng-repeat="swapper in swappers">
-            {{swapper.employee.name}} {{swapper.role.name}} {{swapper.scheduleDate | date:'EEEE d MMM yyyy'}} {{swapper.starttime | date:'h:mm a'}}-{{swapper.endtime | date:'h:mm a'}}
-          </option>
+
+        <select chosen multiple class="form-control"
+            ng-options="swapper as (swapper | swapperFilter) for swapper in swappers track by swapper._id"
+            ng-model="selectedSwappers">
+            <option value=""></option>
         </select>
+
       </div>
       <div class="panel-footer">
         <button type="button" class="btn btn-primary" ng-click="handleAskAll(selectedShift, selectedSwappers)">Ask All</button>

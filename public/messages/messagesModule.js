@@ -60,7 +60,7 @@ angular.module('messagesModule', ['localytics.directives'])
       };
 
       $scope.handleMessageAction = function(action, message){
-        $hhtp.post(action.url, message)
+        $http.post(action.url, message)
           .then(function(resp){
             $scope.showView = undefined;
             $scope.selectedMessage = undefined;

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-module.exports = mongoose.model('Message', new Schema({
+module.exports = mongoose.model('Message', (new Schema({
   content: {
     title: String,
     body: String
@@ -22,8 +22,15 @@ module.exports = mongoose.model('Message', new Schema({
   confirmed: Date,
   actions: [{
     name: String,
+    type: {
+      type: String,
+      enum: ['swap']
+    },
     url: String,
     data: Schema.Types.Mixed,
     performed: Date
   }]
+}))
+.post('save', (message) => {
+  // console.log(message); //TODO broadcaster
 }));

@@ -44,6 +44,21 @@ class MessageService {
     return Message.findOneAndRemove(message);
   }
 
+  removeSwapRequests(requestSwapEmployee, shiftId) {
+    return Message.remove({
+      from: requestSwapEmployee._id,
+      actions: {
+        $elemMatch: {
+          type: 'swap',
+          'data.shift._id': {
+            $eq: shiftId
+          }
+        }
+      }
+    });
+
+  }
+
 }
 
 module.exports = new MessageService();

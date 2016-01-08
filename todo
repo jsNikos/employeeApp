@@ -1,13 +1,20 @@
 - create swapper mechanism in schedule-page
-  (first allow all shift to be swapped) and add /requestSwap and /swap to API
-* when ask-to-swap send message to others - with the action: 'request swap'
-* use websocket/broadcaster to push
-* if one accepts send message back that was accepted
-  and change schedule of both; again use broadcaster
-  to push the schedule update to clients
+  (the MessageService.removeSwapRequests doesn't remove the message)
+  but this test did:
+  app.all('/test', (req, res) => {
+    services.messageService.removeSwapRequests('568a4a1f161139dd2a66316a', '568f9d905d3b1fe12e8ff82a')
+      .then((result) => {
+        res.json(result);
+      })
+  });
+
 
 - create broadcaster service
+  Try to use mongoose middleware schema.post('save'/'update')
+  to trigger broadcasts. (see Shift, Message)
   (broadcaster adds connections based on authenticationService.findUser(req))
+  The client will register in controllers the 'topic' and open ws.
+  In case of message in handles: model.merge(change).
   The client (has automatic reconnect as options and running in webworker)
   this becomes own bower repo
   The broadcast must check authorization of connection on each send/receive event.
@@ -23,7 +30,7 @@
 
 - security: needs mechanism to show login-page immediately when 401 is discovered
 
-- create schedule
+- enhance scheduler
 * something what works quick in mobile
 * schedule by employee/role
 * create 2h/4h/8h button -> select role -> show in editor -> ok/cancel
@@ -31,10 +38,12 @@
 * show problematic shifts and let fix by flowing throw process
 
 - details:
+* swapping mechanism needs logic (restrict possible swappers, ...)
 * the Employee.name must be unique
 * passwords never return in API, passwords must be md5-hashed in db
 * make angular working with requirejs or system
-
+* use sequelize when it comes to mysql
+* have a look at sails.js
 
 - bugs:
  * 1. select employee

@@ -9,6 +9,32 @@ var messageService = require('./MessageService');
 class SchedulerService {
   constructor() {}
 
+  swap(message) {
+    let data = _.find(message.actions, {
+      type: 'swap'
+    }).data;
+
+    return Promise
+      .all([
+        Shift.findOne(data.swapper).populate('employee role'),
+        Shift.findOne(data.shift).populate('employee role')
+      ])
+      .then((result) => {
+        let swapper = result[0];
+        let shift = result[1];
+        let swapperEmployee = swapper.employee;
+        let requestSwapEmployee = shift.employee;
+        swapper.employee = shift.employee;
+        shift.employee = swapperEmployee;
+        return Promise.all([
+          swapper.save(),
+          shift.save(),
+          messageService.create(this.createSwapConfirmMessage(shift, swapper), swapperEmployee),
+          messageService.removeSwapRequests(requestSwapEmployee, shift._id)
+        ]);
+      });
+  }
+
   requestSwap(shift, swappers) {
     var msgPromises = _.map(swappers, (swapper) => {
       let message = this.createSwapMessage(shift, swapper);
@@ -17,22 +43,50 @@ class SchedulerService {
     return Promise.all(msgPromises);
   }
 
+  createSwapConfirmMessage(shift, swapper) {
+    return {
+      content: {
+        title: 'Your request for swapping a shift has been agreed',
+        body: shift.employee.name + ' has agreed to swap with you his shift ' +
+          this.formatScheduleDate(swapper.scheduleDate) + ' from ' + this.formatShiftTime(swapper.starttime) + ' to ' +
+          this.formatShiftTime(swapper.endtime) + ' as ' + swapper.role.name + ' with your shift ' +
+          ' at ' + this.formatScheduleDate(shift.scheduleDate) + ' ' +
+          this.formatShiftTime(shift.starttime) + ' to ' +
+          this.formatShiftTime(shift.endtime) + ' as ' + shift.role.name
+      },
+      to: swapper.employee
+    };
+  }
+
   createSwapMessage(shift, swapper) {
     return {
       content: {
         title: 'Requesting to Swap a Shift',
-        body: 'I would like to swap with you my shift from ' + shift.starttime + ' to ' + shift.endtime + ' as ' + shift.role + ' with your shift ' +
-          +swapper.starttime + ' to ' + swapper.endtime + ' as ' + swapper.role
+        body: 'I would like to swap with you my shift at ' +
+          this.formatScheduleDate(shift.scheduleDate) + ' from ' + this.formatShiftTime(shift.starttime) + ' to ' +
+          this.formatShiftTime(shift.endtime) + ' as ' + shift.role.name + ' with your shift ' +
+          ' at ' + this.formatScheduleDate(swapper.scheduleDate) + ' ' +
+          this.formatShiftTime(swapper.starttime) + ' to ' +
+          this.formatShiftTime(swapper.endtime) + ' as ' + swapper.role.name
       },
       to: swapper.employee,
       actions: [{
         name: 'Agree to Swap',
+        type: 'swap',
         url: '/schedule/api/swap',
         data: {
           shift, swapper
         }
       }]
     };
+  }
+
+  formatShiftTime(date) {
+    return moment(date).format('h:mm a');
+  }
+
+  formatScheduleDate(date) {
+    return moment(date).format('dddd do of MMM YYYY');
   }
 
   //TODO restrict on matches (much logic!!)
