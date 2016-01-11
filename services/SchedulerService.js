@@ -30,7 +30,7 @@ class SchedulerService {
           swapper.save(),
           shift.save(),
           messageService.create(this.createSwapConfirmMessage(shift, swapper), swapperEmployee),
-          messageService.removeSwapRequests(requestSwapEmployee, shift._id)
+          messageService.removeSwapRequests(message.from._id, data.shift._id)  // needs to be done, because ObjectId don't match the string equivalent
         ]);
       });
   }

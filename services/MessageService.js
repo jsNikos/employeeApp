@@ -44,9 +44,9 @@ class MessageService {
     return Message.findOneAndRemove(message);
   }
 
-  removeSwapRequests(requestSwapEmployee, shiftId) {
+  removeSwapRequests(requestSwapEmployeeId, shiftId) {
     return Message.remove({
-      from: requestSwapEmployee._id,
+      from: requestSwapEmployeeId,
       actions: {
         $elemMatch: {
           type: 'swap',
@@ -56,7 +56,6 @@ class MessageService {
         }
       }
     });
-
   }
 
 }
