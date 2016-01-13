@@ -51,7 +51,7 @@ class MessageService {
         $elemMatch: {
           type: 'swap',
           'data.shift._id': {
-            $eq: shiftId
+            $eq: shiftId.toString()
           }
         }
       }

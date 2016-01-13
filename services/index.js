@@ -4,5 +4,6 @@ module.exports = {
   roleService: require('./RoleService'),
   employeeService: require('./EmployeeService'),
   authenticationService: require('./AuthenticationService'),
-  messageService: require('./MessageService')
+  messageService: require('./MessageService'),
+  broadcasterService: require('./BroadcasterService')
 }

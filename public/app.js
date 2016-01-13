@@ -1,5 +1,5 @@
 var employeeApp = angular.module('employeeApp', [
-    'ngRoute',    
+    'ngRoute',
     'scheduleModule',
     'messagesModule',
     'timeoffModule',
@@ -7,7 +7,8 @@ var employeeApp = angular.module('employeeApp', [
     'rolesModule',
     'employeesModule',
     'loginModule',
-    'schedulerModule'
+    'schedulerModule',
+    'websocketServiceModule'
   ])
   .config(['$routeProvider',
     function($routeProvider) {
@@ -49,12 +50,12 @@ var employeeApp = angular.module('employeeApp', [
       });
     }
   ])
-  .controller('AppController', function($scope, $http, $location) {
+  .controller('AppController', function($scope, $http, $location, websocketService) {
     $scope.username = undefined; // logged-in user
     $scope.messages = undefined; // message for current user
 
     $http.get('/init/api/init')
-      .then(function(resp){
+      .then(function(resp) {
         $scope.username = resp.data.user.name;
         $scope.messages = resp.data.messages;
       });
