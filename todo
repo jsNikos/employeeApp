@@ -11,6 +11,7 @@
   The check is:  connection.findSessionById(connection.sessionId) check user-attribute
   This only, in cases when the topic requires authentication. Close
   otherwise.
+  Unsubscribe when naviagated away from controller. (some hook in router)
 
 - redirect to login for all requests
   which are not authorized (check authorization for each request) and set
@@ -34,6 +35,7 @@
 * make angular working with requirejs or system
 * use sequelize when it comes to mysql
 * have a look at sails.js - try to build all with this
+* reconnection of websocket seems not to work (restart server)
 
 - bugs:
  * 1. select employee

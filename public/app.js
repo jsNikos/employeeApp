@@ -51,13 +51,15 @@ var employeeApp = angular.module('employeeApp', [
     }
   ])
   .controller('AppController', function($scope, $http, $location, websocketService) {
-    $scope.username = undefined; // logged-in user
+    $scope.user = undefined; // logged-in user
     $scope.messages = undefined; // message for current user
 
     $http.get('/init/api/init')
       .then(function(resp) {
+        $scope.user = resp.data.user;
         $scope.username = resp.data.user.name;
         $scope.messages = resp.data.messages;
+        websocketService.subscribe(websocketService.createTopic('message/change', $scope.user._id));
       });
 
     $scope.$on('initialized', function(event, navigationTarget) {

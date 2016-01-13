@@ -26,7 +26,10 @@ class BroadcasterService {
     let connection = req.accept(req.origin, []);
     let wsConnection = {
       connection,
-      topics: []
+      topics: [],
+        hasTopic(topic) {
+          return _.find(this.topics, topic);
+        }
     };
     connection.on('close', () => {
       _.remove(this.wsConnections, (elem) => {
@@ -39,18 +42,27 @@ class BroadcasterService {
       });
     });
     connection.on('message', (message) => {
-      this.handleMessage(message);
+      this.handleMessage(message, connection);
     });
     this.wsConnections.push(wsConnection);
   }
 
-  handleMessage(message) {
-    console.log(message);
-    //TODO
+  handleMessage(message, connection) {
+    let data = JSON.parse(message.utf8Data);
+    switch (data.type) {
+      case 'SUBSCRIBE':
+        this.subscribe(data.topic, connection);
+        break;
+      case 'UNSUBSCRIBE':
+        this.unsubscribe(data.topic, connection);
+        break;
+      default:
+        throw new Error('Not supported message-type for websocket ' + data.type);
+    }
   }
 
   subscribe(topic, connection) {
-    let wsConnection = _.find(wsConnections, {
+    let wsConnection = _.find(this.wsConnections, {
       connection
     });
     if (_.find(wsConnection.topics, topic) == null) {
@@ -58,19 +70,28 @@ class BroadcasterService {
     }
   }
 
-  unsubscribe(topic) {
-    let wsConnection = _.find(wsConnections, {
-      connection: connection
+  unsubscribe(topic, connection) {
+    let wsConnection = _.find(this.wsConnections, {
+      connection
     });
     _.remove(wsConnection.topics, topic);
   }
 
   send(message, wsConnection) {
-    wsConnection.connection.send(message);
+    wsConnection.connection.send(JSON.stringify(message));
   }
 
+  // message: {data: Object, topic: Topic}
   broadcast(message, topic) {
-    //TODO
+    message.topic = topic;
+    _.chain(this.wsConnections)
+      .filter((wsConnection) => {
+        return wsConnection.hasTopic(topic)
+      })
+      .forEach((wsConnection) => {
+        this.send(message, wsConnection);
+      })
+      .value();
   }
 
 }

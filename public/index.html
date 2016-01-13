@@ -57,7 +57,7 @@
 
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a ng-show="username != undefined">{{username}}</a>
+              <a ng-show="user != undefined">{{user.name}}</a>
             </li>
         </div>
         <!--/.nav-collapse -->
@@ -78,6 +78,7 @@
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="bower_components/chosen/chosen.jquery.min.js"></script>
   <script src="bower_components/angular-chosen-localytics/chosen.js"></script>
+  <script src="bower_components/angular-websocket/angular-websocket.min.js"></script>
   <script src="app.js"></script>
   <script src="schedule/scheduleModule.js"></script>
   <script src="messages/messagesModule.js"></script>
