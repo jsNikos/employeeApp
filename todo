@@ -1,18 +1,3 @@
-
-- create broadcaster service
-  Try to use mongoose middleware schema.post('save'/'update')
-  to trigger broadcasts. (see Shift, Message)
-  (broadcaster adds connections based on authenticationService.findUser(req))
-  The client will register in controllers the 'topic' and open ws.
-  In case of message in handles: model.merge(change).
-  The client (has automatic reconnect as options and running in webworker)
-  this becomes own bower repo
-  The broadcast must check authorization of connection on each send/receive event.
-  The check is:  connection.findSessionById(connection.sessionId) check user-attribute
-  This only, in cases when the topic requires authentication. Close
-  otherwise.
-  Unsubscribe when naviagated away from controller. (some hook in router)
-
 - redirect to login for all requests
   which are not authorized (check authorization for each request) and set
   response-status to 403 (un-authorized) 401 (un-authenticated)
@@ -20,6 +5,15 @@
   themself from there
 
 - security: needs mechanism to show login-page immediately when 401 is discovered
+
+- recreate with sail.js or nodal, use another db (couchdb?)
+
+- broadcaster
+  The broadcast must check authorization of connection on each send/receive event.
+  The check is:  connection.findSessionById(connection.sessionId) check user-attribute
+  This only, in cases when the topic requires authentication. Close
+  otherwise.
+  Unsubscribe when naviagated away from controller. (some hook in router)
 
 - enhance scheduler
 * something what works quick in mobile

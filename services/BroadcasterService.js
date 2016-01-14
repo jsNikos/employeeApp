@@ -7,8 +7,8 @@ class BroadcasterService {
   constructor() {
     this.wsConnections = [];
     this.topicNames = {
-      messagesChanged: 'message/change',
-      scheduleChanged: 'schedule/change'
+      'message/change': 'message/change',
+      'schedule/change': 'schedule/change'
     }
   }
 
@@ -81,7 +81,7 @@ class BroadcasterService {
     wsConnection.connection.send(JSON.stringify(message));
   }
 
-  // message: {data: Object, topic: Topic}
+  // message: {data: Object, details: Mixed, topic: Topic}
   broadcast(message, topic) {
     message.topic = topic;
     _.chain(this.wsConnections)

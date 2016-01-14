@@ -59,8 +59,23 @@ var employeeApp = angular.module('employeeApp', [
         $scope.user = resp.data.user;
         $scope.username = resp.data.user.name;
         $scope.messages = resp.data.messages;
-        websocketService.subscribe(websocketService.createTopic('message/change', $scope.user._id));
+        websocketService.subscribe(websocketService.createTopic('message/change', $scope.user._id), $scope.handleMessageChange);
       });
+
+    $scope.handleMessageChange = function(broadcastMsg) {
+      var incMessage = broadcastMsg.data;
+      if (broadcastMsg.details === 'save') {
+        if (_.find($scope.messages, {
+            _id: incMessage._id
+          }) == null) {
+          $scope.messages.push(incMessage);
+        }
+      } else if (broadcastMsg.details === 'remove') {
+        _.remove($scope.messages, {
+          _id: incMessage._id
+        });
+      }
+    };
 
     $scope.$on('initialized', function(event, navigationTarget) {
       $scope.currentNav = navigationTarget;
