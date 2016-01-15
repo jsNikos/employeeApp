@@ -10,8 +10,20 @@ var employeeApp = angular.module('employeeApp', [
     'schedulerModule',
     'websocketServiceModule'
   ])
-  .config(['$routeProvider',
-    function($routeProvider) {
+  .config(['$routeProvider', '$httpProvider',
+    function($routeProvider, $httpProvider) {
+
+      $httpProvider.interceptors.push(function($q, $location) {
+        return {
+          'responseError': function(rejection) {
+            if(rejection.status == 401){
+              $location.path('/login');
+            }
+            return $q.reject(rejection);
+          }
+        };
+      });
+
       $routeProvider.
       when('/schedule', {
         templateUrl: 'schedule/schedule.html',
@@ -83,6 +95,7 @@ var employeeApp = angular.module('employeeApp', [
 
     $scope.$on('signin', function(event, username) {
       $scope.username = username;
+      $location.path('/');
     });
 
     $scope.handleNavigation = function(event) {

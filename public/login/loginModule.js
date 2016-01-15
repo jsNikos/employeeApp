@@ -15,7 +15,7 @@ angular.module('loginModule', [])
           .then(function(){
             $scope.$emit('signin', username);
           })
-          .catch(function(err){
+          .catch(function(err){          
             if(err.status === 401){
               $scope.failReason = 'Wrong User Name or Password';
             } else{

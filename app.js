@@ -81,11 +81,18 @@ passport.deserializeUser((id, done) => {
 });
 passport.use(new LocalStrategy(services.authenticationService.authenticate));
 
+app.use('/login/api', require('./routes/loginAPI'));
+app.use('/', function(req, res, next) {
+  if (services.authenticationService.findAuthenticatedUser(req)) {
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+});
 app.use('/init/api', require('./routes/initAPI'));
 app.use('/schedule/api', require('./routes/scheduleAPI'));
 app.use('/roles/api', require('./routes/rolesAPI'));
 app.use('/employees/api', require('./routes/employeesAPI'));
-app.use('/login/api', require('./routes/loginAPI'));
 app.use('/message/api', require('./routes/messageAPI'));
 app.use('/scheduler/api', require('./routes/schedulerAPI'));
 
